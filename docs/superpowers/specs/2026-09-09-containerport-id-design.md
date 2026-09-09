@@ -26,7 +26,7 @@ Narrative link to prior work: KKI2026 (autonomous surface vessel + mission dashb
 - **License:** public/open (IMF PortWatch / World Bank alternative-data program). Cite in README.
 - **Columns used:** `date, portname, portcalls, portcalls_container, import, export, import_container, export_container` (+ by-type splits as needed).
 - **Verified quality:**
-  - Top container ports: Tanjung Priok (avg 11.66 container calls/day, ~47% national share), Surabaya (7.40), Gresik (4.72), Makassar (2.31), Belawan (1.32).
+  - Top container ports (share of national container calls, 2019–2026): Tanjung Priok 35.5% (32,618 calls), Surabaya 22.5%, Gresik 14.3% (top-3 = 72.3%), Makassar 7.0%, Belawan 4.0%.
   - 47/75 ports have container activity; 28 are bulk/oil-only (excluded from container modeling).
   - Weekly CV (2022+): Priok 0.09, Surabaya 0.13, Gresik 0.17, Makassar 0.19, Belawan 0.32 — clean signal for forecasting.
   - No missing days 2024+, 0% zero-call days for Priok 2024+.
@@ -56,8 +56,7 @@ Narrative link to prior work: KKI2026 (autonomous surface vessel + mission dashb
 - **Reporting:** per-port model ranking table + forecast fan chart for the flagship port (Priok).
 
 ### L3 — Anomaly / Early Warning (notebook 04)
-- Residuals from the best per-port forecast → z-score & Isolation Forest on daily/weekly residuals.
-- Backtest narrative: which known events do we detect? (COVID lockdown 2020, export moratoria 2022–2023 waves, Ramadan shifts, weather disruptions). Documented with dates + magnitude.
+- Residuals from the best per-port forecast → z-score & Isolation Forest on daily/weekly residuals. **Note:** the forecasting layer trains primarily on 2022+ data, so for anomaly backtests over 2020–2021 (COVID lockdown) the residual baseline is re-fit on the pre-2022 segment; post-2022 anomalies use the main forecast residuals.
 - Output: list of detected anomaly episodes (port, date, direction, severity) — the "early warning log".
 
 ### L4 — Executive Summary (report)
@@ -100,7 +99,7 @@ portofolio/                      (repo root, git initialized)
 
 ## 6. Tech Stack
 
-Python 3.13 (system). pandas, numpy, matplotlib, statsmodels, xgboost, scikit-learn, torch (LSTM), holidays, streamlit, jupyter. No new exotic dependencies.
+Python 3.14 (system). pandas, numpy, matplotlib, statsmodels, xgboost, scikit-learn, torch (LSTM), holidays, streamlit, jupyter. No new exotic dependencies.
 
 ## 7. Risks & Mitigations
 

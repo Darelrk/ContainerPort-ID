@@ -1,0 +1,61 @@
+portname,target,start_yw,end_yw,dir,max_abs_z,n_weeks
+Surabaya,portcalls_container,202003,202003,spike,2.826272197779374,1
+Bitung,portcalls_container,202008,202008,spike,2.6608965077689612,1
+Surabaya,portcalls_container,202022,202022,spike,3.532670603034675,1
+Tanjung Priok,portcalls_container,202022,202022,spike,3.9113161103784084,1
+Manokwari Road,portcalls_container,202025,202025,spike,2.673220177140192,1
+Gresik,portcalls_container,202029,202029,spike,2.3353651363728263,1
+Gresik,portcalls_container,202041,202041,spike,2.3353651363728263,1
+Makassar,portcalls_container,202108,202108,drop,1.9985303812212254,1
+Tanjung Priok,portcalls_container,202119,202119,drop,3.0514462389606276,1
+Surabaya,portcalls_container,202121,202121,spike,2.590806062694274,1
+Manokwari Road,portcalls_container,202128,202128,drop,2.638776395330225,1
+Teluk Bayur,portcalls_container,202129,202129,drop,2.3865190514779115,1
+Donggala,portcalls_container,202135,202135,drop,2.6694225756827707,1
+Tanjung Priok,portcalls_container,202137,202137,drop,2.8466591110388912,1
+Teluk Bayur,portcalls_container,202138,202139,drop,2.3865190514779115,2
+Manokwari Road,portcalls_container,202150,202150,drop,2.638776395330225,1
+Makassar,portcalls_container,202151,202151,spike,2.7778851281126773,1
+Bitung,portcalls_container,202152,202152,drop,2.6052503830817777,1
+Surabaya,portcalls_container,202202,202202,drop,2.185322497616439,1
+Surabaya,portcalls_container,202208,202208,drop,2.304244927214635,1
+Makassar,portcalls_container,202211,202211,spike,2.3194646194181217,1
+Manokwari Road,portcalls_container,202229,202229,spike,2.7492863524916507,1
+Makassar,portcalls_container,202232,202232,spike,2.7750737410895385,1
+Belawan,portcalls_container,202240,202240,spike,2.174132262712311,1
+Tanjung Priok,portcalls_container,202241,202241,spike,2.5586173624714257,1
+Belawan,portcalls_container,202243,202243,spike,2.62115011112045,1
+Manokwari Road,portcalls_container,202244,202244,spike,2.7492863524916507,1
+Gresik,portcalls_container,202301,202301,spike,2.3312036506375207,1
+Makassar,portcalls_container,202326,202326,drop,2.920040279803171,1
+Teluk Bayur,portcalls_container,202334,202334,drop,2.6173408275670043,1
+Donggala,portcalls_container,202334,202334,drop,2.5269943369006946,1
+Surabaya,portcalls_container,202336,202336,spike,2.2148073975168185,1
+Manokwari Road,portcalls_container,202339,202339,spike,3.4416144454187885,1
+Gresik,portcalls_container,202344,202344,spike,2.462462674242518,1
+Bitung,portcalls_container,202411,202411,drop,2.989208229407243,1
+Tanjung Priok,portcalls_container,202411,202411,drop,2.5384327631447774,1
+Teluk Bayur,portcalls_container,202414,202414,drop,3.225790856645981,1
+Tanjung Priok,portcalls_container,202415,202415,drop,3.0693754845631323,1
+Teluk Bayur,portcalls_container,202415,202415,spike,2.858709434143789,1
+Tanjung Priok,portcalls_container,202416,202416,spike,2.2400517296204128,1
+Gresik,portcalls_container,202418,202418,drop,2.394121199142396,1
+Belawan,portcalls_container,202433,202433,drop,2.2960462213690764,1
+Gresik,portcalls_container,202436,202436,drop,2.262862175537398,1
+Bitung,portcalls_container,202444,202444,spike,2.268611696818459,1
+Bitung,portcalls_container,202446,202446,spike,2.268611696818459,1
+Donggala,portcalls_container,202449,202449,drop,2.111550974448271,1
+Makassar,portcalls_container,202451,202451,drop,2.236626597296046,1
+Bitung,portcalls_container,202506,202506,spike,2.268611696818459,1
+Kendari,portcalls_container,202533,202533,spike,2.9353340749397487,1
+Bitung,portcalls_container,202541,202541,drop,2.5510565688884346,1
+Gresik,portcalls_container,202542,202542,spike,2.462462674242518,1
+Makassar,portcalls_container,202550,202550,spike,2.3194646194181217,1
+Belawan,portcalls_container,202551,202551,drop,2.743064069777215,1
+Belawan,portcalls_container,202601,202601,drop,2.147040271899697,1
+Kendari,portcalls_container,202607,202607,drop,2.801995163026299,1
+Donggala,portcalls_container,202610,202610,drop,2.111550974448271,1
+Kendari,portcalls_container,202617,202617,drop,3.2433281813313792,1
+Surabaya,portcalls_container,202619,202619,drop,2.304244927214635,1
+Tanjung Priok,portcalls_container,202623,202623,drop,2.8569983959957903,1
+Donggala,portcalls_container,202634,202634,drop,2.5269943369006946,1

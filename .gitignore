@@ -1,0 +1,17 @@
+# Runtime data files - too large for git
+data/raw/*.csv
+data/raw/*.parquet
+data/processed/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Models artifacts
+*.pt
+*.pkl
