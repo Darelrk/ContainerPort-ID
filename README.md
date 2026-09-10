@@ -31,6 +31,16 @@ The anomaly layer (z-score + Isolation Forest on y(t) − y(t−52) residuals, C
 - **2023 drops** (Teluk Bayur, Makassar): global freight recession
 - **2024-W15 multi-port drop**: Lebaran shutdown (10 Apr 2024)
 
+### How it works
+
+![Pipeline architecture](reports/figures/diagrams/pipeline.png)
+
+![Walk-forward validation loop](reports/figures/diagrams/walk_forward.png)
+
+![Anomaly early-warning flow](reports/figures/diagrams/anomaly_flow.png)
+
+Interactive sources live in `reports/figures/diagrams/*.html` (self-contained HTML/SVG).
+
 ## Data
 
 **IMF PortWatch** daily port activity & shipment estimates, Indonesia, via [HDX](https://data.humdata.org/dataset/2c0f31be-3561-41c8-acce-b868ef40c868) — public/open data, updated weekly.

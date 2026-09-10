@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContainerPort-ID — Pipeline Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f4f4ef;
+      --color-ink:     #14233b;
+      --color-muted:   #667286;
+      --color-soft:   #8593a8;
+      --color-accent:  #e85d4a;
+      --font-sans:     'Space Grotesk', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1160px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture · ContainerPort-ID</p>
+    <h1>From weekly-updated AIS source to walk-forward-validated forecasts</h1>
+
+    <svg viewBox="0 0 1080 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cpipeline-title cpipeline-desc">
+      <title id="cpipeline-title">ContainerPort-ID pipeline architecture</title>
+      <desc id="cpipeline-desc">Data pipeline flowing from the IMF PortWatch source through weekly aggregation, feature engineering, a four-model ladder with walk-forward validation, into anomaly detection and a Streamlit dashboard.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#667286"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#e85d4a"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f4f4ef"/>
+
+      <!-- ================= ARROWS (drawn first, behind boxes) ================= -->
+      <!-- HDX -> Raw -->
+      <line x1="180" y1="112" x2="224" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Raw -> Weekly -->
+      <line x1="364" y1="112" x2="408" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Weekly -> Features -->
+      <line x1="548" y1="112" x2="592" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Features -> Model ladder (focal arrow) -->
+      <line x1="732" y1="112" x2="776" y2="112" stroke="#e85d4a" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <!-- Features -> Anomaly (down then right: from bottom of Features) -->
+      <path d="M 662,144 V 300 H 816" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <!-- Model ladder -> Anomaly (down-left elbow) -->
+      <path d="M 836,144 V 172 Q 836,180 828,180 H 984 V 300" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <!-- Model ladder -> Projections (down) -->
+      <line x1="806" y1="144" x2="806" y2="224" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Projections -> Dashboard (down) -->
+      <line x1="806" y1="292" x2="806" y2="340" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Anomaly -> Dashboard (right then down elbow) -->
+      <path d="M 916,332 H 948 Q 956,332 956,340 V 356 H 864" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+      <!-- ================= ZONES (behind nodes, after arrows is fine since zone fill is 2%) ================= -->
+      <!-- Zone: Data -->
+      <rect x="24" y="64" width="560" height="96" rx="8" fill="rgba(20,35,59,0.02)" stroke="rgba(20,35,59,0.10)" stroke-width="0.8"/>
+      <rect x="40" y="68" width="52" height="12" rx="2" fill="#f4f4ef"/>
+      <text x="66" y="77" fill="rgba(20,35,59,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">DATA</text>
+
+      <!-- Zone: Modeling -->
+      <rect x="600" y="64" width="372" height="96" rx="8" fill="rgba(20,35,59,0.02)" stroke="rgba(20,35,59,0.10)" stroke-width="0.8"/>
+      <rect x="616" y="68" width="76" height="12" rx="2" fill="#f4f4ef"/>
+      <text x="654" y="77" fill="rgba(20,35,59,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">MODELING</text>
+
+      <!-- ================= NODES ================= -->
+      <!-- HDX source (external) -->
+      <rect x="56" y="88" width="124" height="48" rx="6" fill="rgba(20,35,59,0.03)" stroke="rgba(20,35,59,0.30)" stroke-width="1"/>
+      <text x="118" y="108" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">IMF PortWatch</text>
+      <text x="118" y="124" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">HDX · weekly</text>
+
+      <!-- Raw store -->
+      <rect x="240" y="88" width="124" height="48" rx="6" fill="rgba(20,35,59,0.05)" stroke="#667286" stroke-width="1"/>
+      <rect x="248" y="94" width="36" height="12" rx="2" fill="transparent" stroke="rgba(102,114,134,0.40)" stroke-width="0.8"/>
+      <text x="266" y="103" fill="rgba(102,114,134,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">STORE</text>
+      <text x="302" y="114" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Daily parquet</text>
+      <text x="302" y="130" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">262k rows · 75 ports</text>
+
+      <!-- Weekly aggregation -->
+      <rect x="424" y="88" width="124" height="48" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="432" y="94" width="44" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="454" y="103" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">AGG</text>
+      <text x="486" y="114" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Weekly frame</text>
+      <text x="486" y="130" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">ISO weeks · top-10</text>
+
+      <!-- Features -->
+      <rect x="608" y="88" width="124" height="48" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="616" y="94" width="56" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="644" y="103" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">FEAT</text>
+      <text x="670" y="114" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Feature matrix</text>
+      <text x="670" y="130" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">lags·roll·cal</text>
+
+      <!-- Model ladder (FOCAL) -->
+      <rect x="792" y="88" width="128" height="56" rx="6" fill="rgba(232,93,74,0.08)" stroke="#e85d4a" stroke-width="1"/>
+      <rect x="800" y="94" width="56" height="12" rx="2" fill="transparent" stroke="rgba(232,93,74,0.40)" stroke-width="0.8"/>
+      <text x="828" y="103" fill="rgba(232,93,74,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CORE</text>
+      <text x="856" y="116" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Model ladder</text>
+      <text x="856" y="132" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">naive·SARIMA·XGB·LSTM</text>
+
+      <!-- Walk-forward validation (backend, below model ladder) -->
+      <rect x="744" y="228" width="124" height="56" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="752" y="234" width="80" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="792" y="243" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">VALIDATE</text>
+      <text x="806" y="256" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Walk-forward</text>
+      <text x="806" y="272" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">expanding · 86 test wks</text>
+
+      <!-- Anomaly layer -->
+      <rect x="856" y="300" width="120" height="56" rx="6" fill="rgba(20,35,59,0.05)" stroke="#667286" stroke-width="1"/>
+      <rect x="864" y="306" width="64" height="12" rx="2" fill="transparent" stroke="rgba(102,114,134,0.40)" stroke-width="0.8"/>
+      <text x="896" y="315" fill="rgba(102,114,134,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ALERT</text>
+      <text x="916" y="328" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Anomaly layer</text>
+      <text x="916" y="344" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">z-score · iForest</text>
+
+      <!-- Dashboard (output) -->
+      <rect x="744" y="344" width="120" height="56" rx="6" fill="rgba(102,114,134,0.10)" stroke="#8593a8" stroke-width="1"/>
+      <rect x="752" y="350" width="60" height="12" rx="2" fill="transparent" stroke="rgba(133,147,168,0.40)" stroke-width="0.8"/>
+      <text x="782" y="359" fill="rgba(133,147,168,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OUT</text>
+      <text x="804" y="372" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Streamlit app</text>
+      <text x="804" y="388" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">fc·alert·bench</text>
+
+      <!-- Arrow label: FIT·PRED di koridor antar node (Features edge 732, ladder edge 792) -->
+      <rect x="736" y="92" width="48" height="12" rx="2" fill="#f4f4ef"/>
+      <text x="760" y="101" fill="#8593a8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">FIT·PRED</text>
+
+      <!-- ================= LEGEND (bottom strip) ================= -->
+      <line x1="30" y1="428" x2="1050" y2="428" stroke="rgba(20,35,59,0.12)" stroke-width="0.8"/>
+      <text x="30" y="444" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+      <!-- item: external -->
+      <rect x="100" y="436" width="20" height="14" rx="3" fill="rgba(20,35,59,0.03)" stroke="rgba(20,35,59,0.30)" stroke-width="0.8"/>
+      <text x="128" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">external source</text>
+      <!-- item: store -->
+      <rect x="232" y="436" width="20" height="14" rx="3" fill="rgba(20,35,59,0.05)" stroke="#667286" stroke-width="0.8"/>
+      <text x="260" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">data store</text>
+      <!-- item: step -->
+      <rect x="348" y="436" width="20" height="14" rx="3" fill="#ffffff" stroke="#14233b" stroke-width="0.8"/>
+      <text x="376" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">pipeline step</text>
+      <!-- item: focal -->
+      <rect x="472" y="436" width="20" height="14" rx="3" fill="rgba(232,93,74,0.08)" stroke="#e85d4a" stroke-width="0.8"/>
+      <text x="500" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">focal (model ladder)</text>
+      <!-- item: solid arrow -->
+      <line x1="652" y1="443" x2="684" y2="443" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="692" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">primary flow</text>
+      <!-- item: dashed -->
+      <line x1="784" y1="443" x2="816" y2="443" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="824" y="446" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">derived / secondary</text>
+    </svg>
+  </div>
+</body>
+</html>

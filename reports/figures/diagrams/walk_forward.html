@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContainerPort-ID — Walk-Forward Validation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f4f4ef;
+      --color-ink:     #14233b;
+      --color-muted:   #667286;
+      --color-soft:    #8593a8;
+      --color-accent:  #e85d4a;
+      --font-sans:     'Space Grotesk', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--color-paper); color: var(--color-ink);
+           min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; }
+    .frame { max-width: 1000px; width: 100%; }
+    .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em;
+               text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.5rem; }
+    h1 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem); font-weight: 400;
+         letter-spacing: -0.02em; line-height: 1.15; color: var(--color-ink); margin-bottom: 1.5rem; }
+    svg { width: 100%; min-width: 760px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Methodology · ContainerPort-ID</p>
+    <h1>Walk-forward validation — one expanding pass per week, zero leakage</h1>
+
+    <svg viewBox="0 0 920 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cwalkfwd-title cwalkfwd-desc">
+      <title id="cwalkfwd-title">Walk-forward validation loop</title>
+      <desc id="cwalkfwd-desc">Flowchart of the expanding-window walk-forward loop: train on data before the target week, predict one week ahead across four models, compare the prediction to the actual, append the actual to the training set, and advance to the next week; final metrics pick the best model per port.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#667286"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#e85d4a"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f4f4ef"/>
+
+      <!-- ============ ARROWS ============ -->
+      <!-- start -> train -->
+      <line x1="460" y1="88" x2="460" y2="120" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- train -> predict -->
+      <line x1="460" y1="176" x2="460" y2="208" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- predict -> compare -->
+      <line x1="460" y1="272" x2="460" y2="304" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- compare -> append -->
+      <line x1="460" y1="368" x2="460" y2="400" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- append -> decision -->
+      <line x1="460" y1="464" x2="460" y2="496" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M 380,532 H 200 Q 192,532 192,524 V 152 Q 192,144 200,144 H 348" fill="none" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- decision NO -> result (right) -->
+      <path d="M 540,532 H 616 Q 624,532 624,540 V 568" fill="none" stroke="#e85d4a" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+      <!-- ============ NODES ============ -->
+      <!-- start oval -->
+      <rect x="416" y="56" width="88" height="32" rx="16" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <text x="460" y="76" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Week t</text>
+
+      <!-- train rect -->
+      <rect x="356" y="120" width="208" height="56" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="364" y="126" width="52" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="390" y="135" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">FIT</text>
+      <text x="460" y="152" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Fit on weeks &lt; t</text>
+      <text x="460" y="168" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">naive · SARIMA · XGB · LSTM</text>
+
+      <!-- predict rect -->
+      <rect x="356" y="208" width="208" height="64" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="364" y="214" width="64" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="396" y="223" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PREDICT</text>
+      <text x="460" y="244" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Forecast week t</text>
+      <text x="460" y="260" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">1-step ahead · refit every 4 wks</text>
+
+      <!-- compare rect -->
+      <rect x="356" y="304" width="208" height="64" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="364" y="310" width="72" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="400" y="319" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SCORE</text>
+      <text x="460" y="340" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Compare to actual</text>
+      <text x="460" y="356" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">MAE · RMSE · MAPE · sMAPE</text>
+
+      <!-- append rect -->
+      <rect x="356" y="400" width="208" height="64" rx="6" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <rect x="364" y="406" width="72" height="12" rx="2" fill="transparent" stroke="rgba(20,35,59,0.40)" stroke-width="0.8"/>
+      <text x="400" y="415" fill="rgba(20,35,59,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">EXPAND</text>
+      <text x="460" y="436" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Append actual y(t)</text>
+      <text x="460" y="452" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">train grows by one week</text>
+
+      <!-- decision diamond -->
+      <path d="M 460,496 L 540,532 L 460,568 L 380,532 Z" fill="#ffffff" stroke="#14233b" stroke-width="1"/>
+      <text x="460" y="536" fill="#14233b" font-size="11" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">More test</text>
+      <text x="460" y="550" fill="#14233b" font-size="11" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">weeks?</text>
+
+      <!-- branch labels -->
+      <rect x="212" y="516" width="28" height="14" rx="2" fill="#f4f4ef"/>
+      <text x="226" y="526" fill="#8593a8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">YES</text>
+      <rect x="552" y="516" width="24" height="14" rx="2" fill="#f4f4ef"/>
+      <text x="564" y="526" fill="#e85d4a" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">NO</text>
+
+      <!-- final metrics (focal) -->
+      <rect x="560" y="568" width="160" height="60" rx="6" fill="rgba(232,93,74,0.08)" stroke="#e85d4a" stroke-width="1"/>
+      <rect x="568" y="574" width="64" height="12" rx="2" fill="transparent" stroke="rgba(232,93,74,0.40)" stroke-width="0.8"/>
+      <text x="600" y="583" fill="rgba(232,93,74,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RESULT</text>
+      <text x="640" y="602" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Best model per port</text>
+      <text x="640" y="618" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">skill vs naive &gt; 0 · 10/10</text>
+
+      <!-- ============ LEGEND ============ -->
+      <line x1="30" y1="656" x2="890" y2="656" stroke="rgba(20,35,59,0.12)" stroke-width="0.8"/>
+      <text x="30" y="672" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+      <rect x="100" y="664" width="20" height="14" rx="7" fill="#ffffff" stroke="#14233b" stroke-width="0.8"/>
+      <text x="128" y="674" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">loop iteration</text>
+      <rect x="232" y="664" width="20" height="14" rx="3" fill="#ffffff" stroke="#14233b" stroke-width="0.8"/>
+      <text x="260" y="674" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">process step</text>
+      <rect x="352" y="664" width="20" height="14" rx="3" fill="rgba(232,93,74,0.08)" stroke="#e85d4a" stroke-width="0.8"/>
+      <text x="380" y="674" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">result (focal)</text>
+      <path d="M 500,671 l 14,0 3,-5 3,10 3,-5 12,0" fill="none" stroke="#667286" stroke-width="0.9"/>
+      <text x="540" y="674" fill="#667286" font-size="8" font-family="'Geist Mono', monospace">decision diamond</text>
+    </svg>
+  </div>
+</body>
+</html>
