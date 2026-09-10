@@ -54,7 +54,7 @@
     <p class="eyebrow">Architecture · ContainerPort-ID</p>
     <h1>From weekly-updated AIS source to walk-forward-validated forecasts</h1>
 
-    <svg viewBox="0 0 1080 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cpipeline-title cpipeline-desc">
+    <svg viewBox="0 0 1160 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cpipeline-title cpipeline-desc">
       <title id="cpipeline-title">ContainerPort-ID pipeline architecture</title>
       <desc id="cpipeline-desc">Data pipeline flowing from the IMF PortWatch source through weekly aggregation, feature engineering, a four-model ladder with walk-forward validation, into anomaly detection and a Streamlit dashboard.</desc>
       <defs>
@@ -65,24 +65,24 @@
       <rect width="100%" height="100%" fill="#f4f4ef"/>
 
       <!-- ================= ARROWS (drawn first, behind boxes) ================= -->
-      <!-- HDX -> Raw -->
-      <line x1="180" y1="112" x2="224" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <!-- Raw -> Weekly -->
-      <line x1="364" y1="112" x2="408" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <!-- Weekly -> Features -->
-      <line x1="548" y1="112" x2="592" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <!-- Features -> Model ladder (focal arrow) -->
-      <line x1="732" y1="112" x2="776" y2="112" stroke="#e85d4a" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-      <!-- Features -> Anomaly (down then right: from bottom of Features) -->
-      <path d="M 662,144 V 300 H 816" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
-      <!-- Model ladder -> Anomaly (down-left elbow) -->
-      <path d="M 836,144 V 172 Q 836,180 828,180 H 984 V 300" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
-      <!-- Model ladder -> Projections (down) -->
+      <!-- HDX -> Raw (Raw edge kiri x=240) -->
+      <line x1="180" y1="112" x2="236" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Raw -> Weekly (Weekly edge x=424) -->
+      <line x1="364" y1="112" x2="420" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Weekly -> Features (Features edge x=608) -->
+      <line x1="548" y1="112" x2="604" y2="112" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Features -> Model ladder, focal (Ladder edge x=792) -->
+      <line x1="732" y1="112" x2="788" y2="112" stroke="#e85d4a" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <!-- Features -> Anomaly: turun x=662, kanan di koridor y=180 (antara row atas & row tengah), masuk tepi KIRI anomaly (x=952) -->
+      <path d="M 662,144 V 180 H 948" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <!-- Model ladder -> Anomaly: keluar bawah ladder x=884, turun ke y=272, kanan ke x=1008, masuk tepi ATAS anomaly (y=296) -->
+      <path d="M 884,144 V 272 H 1008 V 292" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <!-- Model ladder -> Walk-forward (down, edge y=228) -->
       <line x1="806" y1="144" x2="806" y2="224" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <!-- Projections -> Dashboard (down) -->
-      <line x1="806" y1="292" x2="806" y2="340" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <!-- Anomaly -> Dashboard (right then down elbow) -->
-      <path d="M 916,332 H 948 Q 956,332 956,340 V 356 H 864" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <!-- Walk-forward -> Streamlit (down, edge y=344) -->
+      <line x1="806" y1="284" x2="806" y2="340" stroke="#667286" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Anomaly -> Streamlit: keluar tepi BAWAH anomaly (y=352), turun, kiri, masuk tepi KANAN streamlit (x=864) -->
+      <path d="M 1008,352 V 372 H 868" fill="none" stroke="#667286" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
 
       <!-- ================= ZONES (behind nodes, after arrows is fine since zone fill is 2%) ================= -->
       <!-- Zone: Data -->
@@ -136,12 +136,12 @@
       <text x="806" y="256" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Walk-forward</text>
       <text x="806" y="272" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">expand · 86 wks</text>
 
-      <!-- Anomaly layer -->
-      <rect x="856" y="300" width="120" height="56" rx="6" fill="rgba(20,35,59,0.05)" stroke="#667286" stroke-width="1"/>
-      <rect x="864" y="306" width="64" height="12" rx="2" fill="transparent" stroke="rgba(102,114,134,0.40)" stroke-width="0.8"/>
-      <text x="896" y="315" fill="rgba(102,114,134,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ALERT</text>
-      <text x="916" y="328" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Anomaly layer</text>
-      <text x="916" y="344" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">z-score · iForest</text>
+      <!-- Anomaly layer (kanan, sejajar walk-forward — tidak overlap streamlit) -->
+      <rect x="952" y="296" width="112" height="56" rx="6" fill="rgba(20,35,59,0.05)" stroke="#667286" stroke-width="1"/>
+      <rect x="960" y="302" width="64" height="12" rx="2" fill="transparent" stroke="rgba(102,114,134,0.40)" stroke-width="0.8"/>
+      <text x="992" y="311" fill="rgba(102,114,134,0.80)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ALERT</text>
+      <text x="1008" y="324" fill="#14233b" font-size="12" font-weight="600" font-family="'Space Grotesk', sans-serif" text-anchor="middle">Anomaly layer</text>
+      <text x="1008" y="340" fill="#667286" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">z-score·iForest</text>
 
       <!-- Dashboard (output) -->
       <rect x="744" y="344" width="120" height="56" rx="6" fill="rgba(102,114,134,0.10)" stroke="#8593a8" stroke-width="1"/>
@@ -155,7 +155,7 @@
       <text x="760" y="101" fill="#8593a8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">FIT·PRED</text>
 
       <!-- ================= LEGEND (bottom strip) ================= -->
-      <line x1="30" y1="428" x2="1050" y2="428" stroke="rgba(20,35,59,0.12)" stroke-width="0.8"/>
+      <line x1="30" y1="428" x2="1130" y2="428" stroke="rgba(20,35,59,0.12)" stroke-width="0.8"/>
       <text x="30" y="444" fill="#667286" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
       <!-- item: external -->
       <rect x="100" y="436" width="20" height="14" rx="3" fill="rgba(20,35,59,0.03)" stroke="rgba(20,35,59,0.30)" stroke-width="0.8"/>
