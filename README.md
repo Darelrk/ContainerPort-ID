@@ -2,7 +2,7 @@
 
 **Weekly container-activity forecasting & early warning across Indonesia's top-10 container ports.**
 
-Flagship data-science portfolio project (targeting maritime-logistics roles — Pelindo, Samudera Indonesia, terminal operators). It answers three operator questions from public data:
+It answers three operator questions from public data:
 
 1. **How many container vessels will call next week?** (berth & crane planning)
 2. **How much import/export tonnage will flow?** (yard & labour planning)
