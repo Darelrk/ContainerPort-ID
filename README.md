@@ -80,7 +80,3 @@ pytest tests/                 # 8/8 invariants
 - **Tonnage units** are estimates from vessel drafts/AIS (not customs figures) — directional signal only.
 - **Projections** (8-week) come from best-model-per-port fit on all data; ISO week-53 arithmetic is approximate (noted in driver).
 - Out of scope: per-vessel ETA, AIS trajectory modeling, realtime ingestion (weekly manual refresh).
-
-## Context
-
-Companion to [KKI2026](https://github.com/Darelrk/KKI2026) (autonomous surface vessel + mission dashboard) — that's the maritime engineering side; this is the maritime data side.
